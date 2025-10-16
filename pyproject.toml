@@ -1,0 +1,21 @@
+[build-system]
+requires = ["poetry-core>=1.2"]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "muni-data"
+description = "Code to query 511 SF API to get real-time muni transit data."
+version = "0.0.1"
+authors = [
+	{ name = "neil.bardhan", email = "indraneil.bardhan@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+
+[tool.poetry]
+package-mode = false 
+
+[tool.poetry.dependencies]
+pandas = "^2.2.0"
+requests = "^2.32.2"
+bump2version = "^1.0.1"
