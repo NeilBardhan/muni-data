@@ -22,10 +22,10 @@ jobs:
               with:
                 python-version: "3.11.6"
             
-            # - name: Install Poetry
-            #   run: |
-            #     make install-poetry
-            #     echo "$HOME/.local/bin" >> $GITHUB_PATH
+            - name: Install Poetry
+              run: |
+                make install-poetry
+                echo "$HOME/.local/bin" >> $GITHUB_PATH
             
             - name: Install dependencies
               run: |
