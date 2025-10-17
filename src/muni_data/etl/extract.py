@@ -1,4 +1,5 @@
 import os
+import json
 import requests
 from dotenv import load_dotenv
 from .utils import log_info
@@ -17,4 +18,7 @@ def fetch_api_data():
     response.raise_for_status()
 
     log_info("API call successful")
-    return response.content
+
+    response_decoded_string = response.content.decode('utf-8-sig')
+    response_json = json.loads(response_decoded_string)
+    return response_json

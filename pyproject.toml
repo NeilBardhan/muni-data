@@ -16,9 +16,6 @@ dynamic = ["dependencies"]
 [project.scripts]
 muni-data = "muni_data.main:main"
 
-# [tool.poetry]
-# package-mode = false 
-
 [tool.poetry.dependencies]
 pandas = "^2.2.0"
 requests = "^2.32.2"

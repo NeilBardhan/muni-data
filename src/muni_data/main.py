@@ -1,7 +1,7 @@
-import json
 from muni_data.etl.extract import fetch_api_data
 from muni_data.etl.transform import transform_to_dataframe
-from muni_data.etl.load import load_to_bigquery, save_response_json_gcs
+from muni_data.etl.load import load_to_bigquery
+from muni_data.etl.save import save_response_json_gcs
 from muni_data.etl.utils import log_info
 import traceback
 
@@ -10,9 +10,7 @@ def main(request=None):
         log_info("Starting the pipeline")
 
         # Step 1: Extract
-        response_data_bytes = fetch_api_data()
-        response_decoded_string = response_data_bytes.decode('utf-8-sig')
-        data = json.loads(response_decoded_string)
+        data = fetch_api_data()
         log_info("Fetched data from API")
 
         # Step 2: Backup raw data to Cloud Storage
