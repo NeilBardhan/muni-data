@@ -1,8 +1,8 @@
 import json
-from etl.extract import fetch_api_data
-from etl.transform import transform_to_dataframe
-from etl.load import load_to_bigquery, save_response_json_gcs
-from etl.utils import log_info
+from muni_data.etl.extract import fetch_api_data
+from muni_data.etl.transform import transform_to_dataframe
+from muni_data.etl.load import load_to_bigquery, save_response_json_gcs
+from muni_data.etl.utils import log_info
 import traceback
 
 def main(request=None):
