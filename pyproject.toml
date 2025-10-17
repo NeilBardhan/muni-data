@@ -19,3 +19,6 @@ package-mode = false
 pandas = "^2.2.0"
 requests = "^2.32.2"
 bump2version = "^1.0.1"
+ipykernel = "^7.0.1"
+jupyterlab = "^4.4.9"
+python-dotenv = "^1.1.1"
