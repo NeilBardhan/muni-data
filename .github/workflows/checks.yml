@@ -32,3 +32,6 @@ jobs:
                 make poetry
                 source .venv/bin/activate
                 pip list
+            
+            - name: Run tests
+              run: make test
