@@ -14,7 +14,8 @@ requires-python = ">=3.11,<3.12"
 dynamic = ["dependencies"]
 
 [project.scripts]
-muni-data = "muni_data.main:main"
+# muni-data = "muni_data.main:main"
+muni-data = "muni_data.command.cli:app"
 
 [tool.poetry.dependencies]
 pandas = "^2.2.0"
@@ -26,3 +27,6 @@ python-dotenv = "^1.1.1"
 google-cloud-bigquery = "^3.38.0"
 google-cloud-storage = "^3.4.1"
 functions-framework = "^3.9.2"
+typer = "^0.19.2"
+pytest-cov = "^7.0.0"
+pytest = "^8.4.2"
