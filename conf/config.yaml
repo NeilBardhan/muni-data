@@ -1,0 +1,3 @@
+API_URL: "http://api.511.org/transit/gtfsoperators"
+BIGQUERY_TABLE_ID: "sf-muni-analytics.muni-data.service-operators"
+RAW_DATA_BUCKET: "response-raw-json"
