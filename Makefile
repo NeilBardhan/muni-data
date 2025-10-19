@@ -55,3 +55,12 @@ bump-minor: ## Bump the minor version (_.X._) everywhere it appears in the proje
 bump-major: ## Bump the major version (X._._) everywhere it appears in the project.
 	@$(call i, Bumping the major number)
 	bump2version major --verbose --config-file config/.bumpversion.cfg
+
+##############
+# Tests.     #
+##############
+
+.PHONY: test
+test: ## Run unit tests.
+	@$(call i, Running tests...)
+	poetry run pytest -c=config/pytest.ini
