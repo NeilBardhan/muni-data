@@ -1,21 +1,20 @@
 import typer
+from typing import Optional
 from muni_data import __app_name__, __version__
+from .operators_cli import app as operators_app
 
-app = typer.Typer(
-    add_completion=False,
-    invoke_without_command=True,
-    no_args_is_help=True,
-    pretty_exceptions_enable=False,
-)
+app = typer.Typer()
+
+app.add_typer(operators_app, name="operators")
 
 def _version_callback(value):
     if value:
         typer.echo("{a} v{v}".format(a = __app_name__, v = __version__))
         raise typer.Exit()
 
-@app.callback(invoke_without_command=True, no_args_is_help=True)
+@app.callback()
 def main(
-    version = typer.Option(
+    version: Optional[bool] = typer.Option(
         None,
         '--version',
         '-v',
