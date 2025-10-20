@@ -7,4 +7,8 @@ app = Typer(invoke_without_command=True)
 
 @app.callback()
 def operators():
-    main()
+    pipeline_status = main()
+    if pipeline_status[1] == 200:
+        log_info("Pipeline succeeded.")
+    else:
+        log_info("Pipeline failed.")
