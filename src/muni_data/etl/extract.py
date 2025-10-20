@@ -8,8 +8,9 @@ load_dotenv()
 
 def fetch_api_data():
     api_key = os.getenv("MUNI_API_KEY")
-    api_url = os.getenv("API_URL")
-    api_url = "{}{}".format(api_url, api_key)
+    # api_url = os.getenv("API_URL")
+    api_url = "http://api.511.org/transit/gtfsoperators"
+    api_url = "{}?api_key={}".format(api_url, api_key)
     # headers = {
     #     "Authorization": f"Bearer {os.getenv('MUNI_API_KEY')}"
     # }
