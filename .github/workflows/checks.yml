@@ -35,3 +35,40 @@ jobs:
             
             - name: Run tests
               run: make test
+    deploy:
+      runs-on: ubuntu-latest
+      needs: build
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/main') && success()
+      permissions:
+        contents: 'read'
+        id-token: 'write'
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Authenticate to Google Cloud
+          uses: google-github-actions/auth@v2
+          with:
+            workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+            service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+        - name: Set up Cloud SDK
+          uses: google-github-actions/setup-gcloud@v2
+
+        - name: Configure Docker for Artifact Registry
+          run: gcloud auth configure-docker us-west1-docker.pkg.dev
+
+        - name: Build and push container
+          run: |
+            IMAGE=us-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/muni-data-ingest-pipeline/muni-data-ingest-pipeline
+            docker build -t $IMAGE .
+            docker push $IMAGE
+
+        - name: Deploy to Cloud Run
+          run: |
+            gcloud run deploy muni-data-ingest-pipeline \
+              --image us-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/muni-data-ingest-pipeline/muni-data-ingest-pipeline \
+              --region us-west1 \
+              --allow-unauthenticated \
+              --update-secrets API_KEY=MUNI_API_KEY:latest

@@ -46,6 +46,12 @@ gcloud iam service-accounts create ${SERVICE_NAME}-sa \
   --display-name "Cloud Run service account for ${SERVICE_NAME}"
 ```
 
+outputs
+
+```bash
+Created service account [muni-data-ingest-pipeline-sa].
+```
+
 Grant necessary permissions:
 
 ```bash
@@ -62,6 +68,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role="roles/artifactregistry.writer"
 ```
 
+each command outputs `Updated IAM policy for project [sf-muni-analytics].` along with the list of IAM bindings.
+
 ---
 
 ## 3. Create and Populate the API Secret
@@ -69,6 +77,13 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 ```bash
 gcloud secrets create $SECRET_NAME --replication-policy="automatic"
 echo -n "your-api-key-here" | gcloud secrets versions add $SECRET_NAME --data-file=-
+```
+
+Outputs
+
+```bash
+Created secret [MUNI_API_KEY].
+Created version [1] of the secret [MUNI_API_KEY].
 ```
 
 ---
@@ -82,7 +97,11 @@ gcloud iam workload-identity-pools create github-pool \
   --project=$PROJECT_ID \
   --location="global" \
   --display-name="GitHub Actions Pool"
+```
 
+Outputs `Created workload identity pool [github-pool].`
+
+```bash
 gcloud iam workload-identity-pools providers create-oidc github-provider \
   --project=$PROJECT_ID \
   --location="global" \
@@ -91,6 +110,8 @@ gcloud iam workload-identity-pools providers create-oidc github-provider \
   --issuer-uri="https://token.actions.githubusercontent.com" \
   --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository"
 ```
+
+If the above does not work, use the UI (IAM -> Workload Identity Federation)
 
 Grant GitHub repository impersonation access:
 
@@ -103,6 +124,8 @@ gcloud iam service-accounts add-iam-policy-binding \
   --member="principalSet://iam.googleapis.com/projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-pool/attribute.repository:${GITHUB_REPO}"
 ```
 
+Outputs `Updated IAM policy for serviceAccount [muni-data-ingest-pipeline-sa@sf-muni-analytics.iam.gserviceaccount.com].`
+
 ---
 
 ## 5. Create Artifact Registry Repository
@@ -112,6 +135,14 @@ gcloud artifacts repositories create muni-data-ingest-pipeline \
   --repository-format=docker \
   --location=$REGION \
   --description="Container images for ${SERVICE_NAME}"
+```
+
+Outputs
+
+```bash
+Create request issued for: [muni-data-ingest-pipeline]
+Waiting for operation [projects/sf-muni-analytics/locations/us-west1/operations/6824e6d3-2018-41dc-b7a8-97696d33a0bd] to complete...done.          
+Created repository [muni-data-ingest-pipeline].
 ```
 
 ---
