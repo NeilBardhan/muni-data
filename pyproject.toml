@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [project]
 name = "muni-data"
 description = "Code to query 511 SF API to get real-time muni transit data."
-version = "0.0.1"
+version = "0.1.0"
 authors = [
 	{ name = "neil.bardhan", email = "indraneil.bardhan@gmail.com" }
 ]

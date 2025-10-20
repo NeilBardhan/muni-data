@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 SHELL := bash
 
-version := 0.0.1
+version := 0.1.0
 
 .PHONY: help
 help:  ## Print this help message.
